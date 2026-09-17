@@ -1,14 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <title>Add Session</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #a {
+            min-height: 140px;
+            width: 100%;
+            background-color: wheat;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            border: 1px solid black;
+            padding: 20px 40px;
+        }
+
+        #a h1 {
+            font-weight: 600;
+        }
+
+        #a p {
+            margin-top: 5px;
+        }
+
+        button {
+            font-size: 18px;
+            padding: 10px 18px;
+            color: red;
+            background-color: black;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        form {
+            width: 400px;
+            margin: 40px auto;
+            padding: 25px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        form button {
+            margin-left: 0;
+            width: 100%;
+        }
+    </style>
 </head>
+
 <body>
-    <form>
-        <input  type=""
+
+    <!-- Header -->
+    <div id="a">
+
+        <div>
+            <h1>Add Session</h1>
+            <p>NOU E-Gyan Portal</p>
+        </div>
+
+        <div>
+            <button type="button">Superadmin</button>
+            <button type="button">Login</button>
+        </div>
+
+    </div>
+
+
+    <!-- Add Student Form -->
+    <form method="post" >
+        {% csrf_token %}
+
+       
+
+        <input
+            type="text"
+            name="name"
+            placeholder="Enter your name"
+            required
+        >
+
+        <input
+            type="text"
+            name="course"
+            placeholder="Enter your course"
+            required
+        >
+
+        <input
+            type="text"
+            name="branch"
+            placeholder="Enter your branch"
+            required
+        >
+
+        <input
+            type="text"
+            name="year"
+            placeholder="Enter your year"
+            required
+        >
+
+
+        <button type="submit">
+            Add Student
+        </button>
+
     </form>
 
 </body>
+
 </html>
