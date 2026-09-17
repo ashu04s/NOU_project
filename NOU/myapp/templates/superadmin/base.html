@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Super Admin Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+  <style>
+    /* =========================
+   GLOBAL
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f7f7f7;
+    color: #222;
+}
+
+
+/* =========================
+   MAIN LAYOUT
+========================= */
+
+.container-fluid {
+    padding: 0;
+}
+
+.row {
+    margin: 0;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    min-height: 100vh;
+    background: linear-gradient(
+        180deg,
+        #8f1028,
+        #b51624
+    ) !important;
+
+    padding: 25px 18px !important;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+}
+
+
+/* Sidebar Heading */
+
+.sidebar h4 {
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 30px !important;
+    padding-left: 10px;
+}
+
+
+/* =========================
+   MENU LINKS
+========================= */
+
+.menu-link {
+    display: flex !important;
+    align-items: center;
+
+    color: #ffffff !important;
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    padding: 13px 15px;
+    margin-bottom: 7px;
+
+    border-radius: 8px;
+
+    transition: all 0.3s ease;
+}
+
+
+/* Hover */
+
+.menu-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(4px);
+}
+
+
+/* Active Link */
+
+.menu-link.active {
+    background: rgba(255, 255, 255, 0.20);
+    font-weight: 600;
+}
+
+
+/* =========================
+   RIGHT CONTENT
+========================= */
+
+.main-content {
+    min-height: 100vh;
+    background: #f8f8f8;
+
+    padding: 35px !important;
+}
+
+
+/* =========================
+   DASHBOARD HEADER
+========================= */
+
+.dashboard-header {
+    background: linear-gradient(
+        135deg,
+        #8f1028,
+        #c93824
+    );
+
+    color: white;
+
+    border-radius: 18px;
+
+    padding: 30px;
+
+    margin-bottom: 30px;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-header h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.dashboard-header p {
+    margin: 0;
+    opacity: 0.85;
+}
+
+
+/* =========================
+   STAT CARDS
+========================= */
+
+.stat-card {
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    border: 1px solid #eeeeee;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Card Icon */
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #fce9e5;
+
+    color: #a91627;
+
+    border-radius: 12px;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    margin-bottom: 18px;
+}
+
+
+/* Card Number */
+
+.stat-card h2 {
+    font-size: 32px;
+
+    font-weight: 700;
+
+    margin-bottom: 5px;
+
+    color: #222;
+}
+
+
+/* Card Text */
+
+.stat-card p {
+    margin: 0;
+
+    color: #777;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   SECTION TITLE
+========================= */
+
+.section-title {
+    font-size: 24px;
+
+    font-weight: 700;
+
+    margin-bottom: 5px;
+
+    color: #222;
+}
+
+.section-subtitle {
+    color: #888;
+
+    font-size: 14px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   QUICK ACTION CARDS
+========================= */
+
+.action-card {
+    background: white;
+
+    border-radius: 16px;
+
+    padding: 22px;
+
+    border: 1px solid #eeeeee;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    text-decoration: none;
+
+    color: #222;
+
+    transition: all 0.3s ease;
+}
+
+
+.action-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+    color: #222;
+}
+
+
+/* Action Icon */
+
+.action-icon {
+    width: 45px;
+    height: 45px;
+
+    background: #fce9e5;
+
+    color: #a91627;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: bold;
+
+    margin-right: 15px;
+}
+
+
+/* Action Text */
+
+.action-card h5 {
+    font-size: 16px;
+
+    font-weight: 600;
+
+    margin-bottom: 5px;
+}
+
+.action-card p {
+    font-size: 13px;
+
+    color: #888;
+
+    margin: 0;
+}
+
+
+/* Arrow */
+
+.action-arrow {
+    color: #d04425;
+
+    font-size: 22px;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   WHITE CONTENT BOX
+========================= */
+
+.content-box {
+    background: white;
+
+    border-radius: 18px;
+
+    border: 1px solid #eeeeee;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+
+    overflow: hidden;
+}
+
+
+/* Box Header */
+
+.content-box-header {
+    padding: 22px 25px;
+
+    border-bottom: 1px solid #eeeeee;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.content-box-header h4 {
+    margin: 0;
+
+    font-size: 18px;
+
+    font-weight: 700;
+}
+
+
+/* Box Body */
+
+.content-box-body {
+    padding: 30px;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn-red {
+    background: #a91627 !important;
+
+    border: none !important;
+
+    color: white !important;
+
+    padding: 10px 20px;
+
+    border-radius: 8px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.btn-red:hover {
+    background: #7e0e1e !important;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-container {
+    background: white;
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+.table thead th {
+    background: #fce9e5;
+
+    color: #8f1028;
+
+    font-weight: 600;
+
+    border: none;
+}
+
+.table tbody td {
+    vertical-align: middle;
+
+    padding: 14px;
+}
+
+
+/* =========================
+   BADGES
+========================= */
+
+.badge-red {
+    background: #fce9e5;
+
+    color: #a91627;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+/* =========================
+   FORMS
+========================= */
+
+.form-container {
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+.form-label {
+    font-weight: 600;
+
+    margin-bottom: 7px;
+}
+
+.form-control,
+.form-select {
+    padding: 12px;
+
+    border-radius: 8px;
+
+    border: 1px solid #ddd;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #a91627;
+
+    box-shadow: 0 0 0 3px rgba(169, 22, 39, 0.1);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        position: relative;
+
+        min-height: auto;
+    }
+
+    .main-content {
+        padding: 20px !important;
+    }
+
+    .dashboard-header h1 {
+        font-size: 24px;
+    }
+
+    .stat-card {
+        margin-bottom: 15px;
+    }
+
+}
+  </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- LEFT SIDEBAR -->
+            <div class="col-md-3 col-lg-2 bg-black text-light sidebar p-3">
+
+                <h4 class="mb-4">Super Admin</h4>
+
+                <!-- All Links -->
+                <div class="d-flex flex-column">
+
+                    <a href="{% url 'superadmindesh' %}"
+                       class="menu-link">
+                        Dashboard
+                    </a>
+                      <a href="{% url 'add_session' %}"
+                       class="menu-link">
+                        ADD Session
+                    </a>
+
+
+                    <a href="{% url 'students' %}"
+                       class="menu-link">
+                        Students
+                    </a>
+
+                    <a href="{% url 'teachers' %}"
+                       class="menu-link">
+                        Teachers
+                    </a>
+
+                    <a href="#"
+                       class="menu-link">
+                        Courses
+                    </a>
+
+                    <a href="#"
+                       class="menu-link">
+                        Add Task
+                    </a>
+
+                    <a href="#"
+                       class="menu-link">
+                        View Task
+                    </a>
+
+                    <a href="#"
+                       class="menu-link">
+                        Add Test
+                    </a>
+
+                    <a href="#"
+                       class="menu-link">
+                        View Test
+                    </a>
+
+                    <a href="#"
+                       class="menu-link">
+                        Results
+                    </a>
+
+                    <a href="#"
+                       class="menu-link">
+                        Student Attendance
+                    </a>
+
+                    <a href="#"
+                       class="menu-link">
+                        Attendance Reports
+                    </a>
+
+                    <a href="#"
+                       class="menu-link">
+                        Schedule Google Meet
+                    </a>
+
+                    <a href="#"
+                       class="menu-link">
+                        View Classes
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT CONTENT -->
+            <div class="col-md-9 col-lg-10 bg-light p-4">
+
+                {% block admin %}
+                {% endblock %}
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
