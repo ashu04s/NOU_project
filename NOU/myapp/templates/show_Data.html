@@ -1,0 +1,707 @@
+{% extends 'superadmin/base.html' %}
+
+{% block admin %}
+
+<style>
+
+    /* =========================
+       SESSION PAGE
+    ========================= */
+
+    .session-page {
+        padding: 5px;
+    }
+
+    /* Header */
+
+    .page-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .page-top h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #222;
+        margin: 0;
+    }
+
+    .breadcrumb {
+        color: #999;
+        font-size: 13px;
+        margin-top: 7px;
+    }
+
+    .admin-profile {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .profile-box {
+        background: white;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 8px 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .profile-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #8f1028, #c93824);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .profile-text strong {
+        display: block;
+        font-size: 13px;
+    }
+
+    .profile-text span {
+        color: #999;
+        font-size: 11px;
+    }
+
+    .logout-btn {
+        padding: 11px 16px;
+        border-radius: 10px;
+        border: 1px solid #ffcfc9;
+        background: #fff;
+        color: #c52c25;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+
+    /* =========================
+       BANNER
+    ========================= */
+
+    .session-banner {
+        position: relative;
+        overflow: hidden;
+
+        min-height: 185px;
+        padding: 30px 35px;
+
+        border-radius: 22px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #87172e,
+                #c63e23
+            );
+
+        color: white;
+
+        box-shadow: 0 12px 30px rgba(143, 16, 40, 0.15);
+
+        margin-bottom: 30px;
+    }
+
+    .session-banner::after {
+        content: "";
+
+        position: absolute;
+
+        width: 350px;
+        height: 350px;
+
+        border: 45px solid rgba(255,255,255,0.06);
+
+        border-radius: 50%;
+
+        right: -80px;
+        top: -120px;
+    }
+
+    .banner-small {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        opacity: .8;
+
+        position: relative;
+        z-index: 2;
+    }
+
+    .session-banner h2 {
+        font-size: 38px;
+        font-weight: 700;
+
+        margin-top: 13px;
+        margin-bottom: 8px;
+
+        position: relative;
+        z-index: 2;
+    }
+
+    .session-banner p {
+        margin: 0;
+
+        font-size: 14px;
+
+        opacity: .9;
+
+        position: relative;
+        z-index: 2;
+    }
+
+    .session-badge {
+        position: absolute;
+
+        top: 23px;
+        right: 25px;
+
+        border: 1px solid rgba(255,255,255,.3);
+
+        padding: 9px 15px;
+
+        border-radius: 20px;
+
+        font-size: 11px;
+        font-weight: 600;
+
+        z-index: 3;
+    }
+
+
+    /* =========================
+       SESSION LIST HEADER
+    ========================= */
+
+    .list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: 18px;
+    }
+
+    .list-title h3 {
+        font-size: 24px;
+        font-weight: 700;
+
+        margin: 0;
+    }
+
+    .title-line {
+        width: 33px;
+        height: 3px;
+
+        background: #d94b1d;
+
+        margin-top: 8px;
+    }
+
+    .add-session-btn {
+        text-decoration: none;
+
+        color: white;
+
+        background: linear-gradient(
+            135deg,
+            #8f1028,
+            #d64a18
+        );
+
+        padding: 11px 17px;
+
+        border-radius: 11px;
+
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .add-session-btn:hover {
+        color: white;
+        opacity: .9;
+    }
+
+
+    /* =========================
+       TABLE
+    ========================= */
+
+    .session-table-box {
+        background: white;
+
+        border: 1px solid #e5e8ed;
+
+        border-radius: 20px;
+
+        overflow: hidden;
+
+        box-shadow: 0 8px 25px rgba(0,0,0,.04);
+    }
+
+    .session-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .session-table thead {
+        background: #f8fafc;
+    }
+
+    .session-table th {
+        padding: 19px 17px;
+
+        text-align: left;
+
+        color: #53627a;
+
+        font-size: 12px;
+
+        font-weight: 700;
+    }
+
+    .session-table td {
+        padding: 18px 17px;
+
+        border-top: 1px solid #edf0f3;
+
+        color: #4d596b;
+
+        font-size: 14px;
+
+        vertical-align: middle;
+    }
+
+    .session-table td:first-child {
+        font-weight: 600;
+        color: #27354b;
+    }
+
+
+    /* =========================
+       STATUS
+    ========================= */
+
+    .status-active {
+        display: inline-block;
+
+        background: #e8f8ee;
+
+        color: #16803d;
+
+        padding: 7px 13px;
+
+        border-radius: 20px;
+
+        font-size: 11px;
+
+        font-weight: 700;
+    }
+
+    .status-inactive {
+        display: inline-block;
+
+        background: #fff0f0;
+
+        color: #c53030;
+
+        padding: 7px 13px;
+
+        border-radius: 20px;
+
+        font-size: 11px;
+
+        font-weight: 700;
+    }
+
+
+    /* =========================
+       ACTION BUTTONS
+    ========================= */
+
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+    }
+
+    .edit-btn {
+        text-decoration: none;
+
+        background: #eff5ff;
+
+        color: #2463c5;
+
+        border: 1px solid #d5e3ff;
+
+        padding: 9px 13px;
+
+        border-radius: 9px;
+
+        font-size: 12px;
+
+        font-weight: 600;
+    }
+
+    .delete-btn {
+        text-decoration: none;
+
+        background: #fff1ef;
+
+        color: #d32920;
+
+        border: 1px solid #ffd2cd;
+
+        padding: 9px 13px;
+
+        border-radius: 9px;
+
+        font-size: 12px;
+
+        font-weight: 600;
+    }
+
+    .edit-btn:hover {
+        background: #dfeaff;
+        color: #2463c5;
+    }
+
+    .delete-btn:hover {
+        background: #ffe1dd;
+        color: #d32920;
+    }
+
+
+    /* =========================
+       EMPTY DATA
+    ========================= */
+
+    .no-data {
+        text-align: center !important;
+
+        padding: 35px !important;
+
+        color: #999 !important;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .session-footer {
+        text-align: center;
+
+        margin-top: 60px;
+
+        color: #9aa3b2;
+
+        font-size: 11px;
+    }
+
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media(max-width: 900px) {
+
+        .page-top {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .session-banner h2 {
+            font-size: 30px;
+        }
+
+        .session-table-box {
+            overflow-x: auto;
+        }
+
+        .session-table {
+            min-width: 750px;
+        }
+
+    }
+
+</style>
+
+
+<div class="session-page">
+
+
+    <!-- =========================
+         TOP HEADER
+    ========================= -->
+
+    <div class="page-top">
+
+        <div>
+
+            <h1>
+                Show Sessions
+            </h1>
+
+            <div class="breadcrumb">
+                NOU e-Gyan • Super Admin Workspace
+            </div>
+
+        </div>
+
+
+        <div class="admin-profile">
+
+            <div class="profile-box">
+
+                <div class="profile-icon">
+                    SU
+                </div>
+
+                <div class="profile-text">
+
+                    <strong>
+                        SuperAdmin
+                    </strong>
+
+                    <span>
+                        Super Admin
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <a href="#" class="logout-btn">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         BANNER
+    ========================= -->
+
+    <div class="session-banner">
+
+        <div class="banner-small">
+            NOU DIGITAL CAMPUS
+        </div>
+
+        <h2>
+            Academic Sessions
+        </h2>
+
+        <p>
+            Review all academic sessions and their current status.
+        </p>
+
+
+        <div class="session-badge">
+            SESSION 2026–27
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         SESSION LIST
+    ========================= -->
+
+    <div class="list-header">
+
+        <div class="list-title">
+
+            <h3>
+                Session List
+            </h3>
+
+            <div class="title-line"></div>
+
+        </div>
+
+
+        <a
+            href="{% url 'add_session' %}"
+            class="add-session-btn">
+
+            + Add Session
+
+        </a>
+
+    </div>
+
+
+
+    <!-- =========================
+         TABLE
+    ========================= -->
+
+    <div class="session-table-box">
+
+        <table class="session-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        #
+                    </th>
+
+                    <th>
+                        SESSION
+                    </th>
+
+                    <th>
+                        START
+                    </th>
+
+                    <th>
+                        END
+                    </th>
+
+                    <th>
+                        STATUS
+                    </th>
+
+                    <th>
+                        ACTION
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for i in users %}
+
+                <tr>
+
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+
+
+                    <td>
+                        {{ i.session_name }}
+                    </td>
+
+
+                    <td>
+                        {{ i.strt_date }}
+                    </td>
+
+
+                    <td>
+                        {{ i.end_date }}
+                    </td>
+
+
+                    <td>
+
+                        {% if i.status == "Active" %}
+
+                        <span class="status-active">
+                            Active
+                        </span>
+
+                        {% else %}
+
+                        <span class="status-inactive">
+                            {{ i.status }}
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="action-buttons">
+
+                            <!-- EDIT -->
+
+                            <a
+                                href="{% url 'edit_session' i.id %}"
+                                class="edit-btn">
+
+                                Edit
+
+                            </a>
+
+
+                            <!-- DELETE -->
+
+                            <a
+                                href="{% url 'delete_session' i.id %}"
+                                class="delete-btn"
+                                >
+
+                                Delete
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+
+                {% empty %}
+
+                <tr>
+
+                    <td
+                        colspan="6"
+                        class="no-data">
+
+                        No sessions found.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <div class="session-footer">
+
+        NOU e-Gyan • Functional Learning Management System
+        • Nalanda Open University
+
+    </div>
+
+
+</div>
+
+{% endblock %}
